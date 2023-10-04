@@ -17,18 +17,12 @@ jobs:
     name: Analyze
     # All rights reserved to Harel Rom. For any usage contact in harelrom1@gmail.com
     # Consider using larger runners for possible analysis time improvements.
-    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
-    timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
     permissions:
       actions: read
       contents: read
       security-events: write
-
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'python' ]
-    # Harel-Rom
 
     steps:
     - name: Checkout repository
@@ -46,23 +40,22 @@ jobs:
         curl -o ${{ github.workspace }}/feature_selection.ql https://raw.githubusercontent.com/harel-coffee/codeql-ml/main/feature_selection.ql
         curl -o ${{ github.workspace }}/qlpack.yml https://raw.githubusercontent.com/harel-coffee/codeql-ml/main/qlpack.yml
 
-
     # Harel-Rom
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
-        languages: ${{ matrix.language }}
+        languages: python
         # If you wish to specify custom queries, you can do so here or in a config file. Harel Rom.
         # By default, queries listed here will override any specified in a config file.
         # Prefix the list here with "+" to use these queries and those in the config file.
-
-        # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/Harel-Rom/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
         queries: ./over_sampling.ql,./feature_selection.ql
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
       with:
-        category: "/language:${{matrix.language}}"
+        category: "/language:python"
         
   
-  # All rights reserved to Harel Rom. For any usage contact in harelrom1@gmail.com
+# All rights reserved to Harel Rom. For any usage contact in harelrom1@gmail.com
+        
+  
