@@ -5,7 +5,7 @@
 # 
 # All rights reserved to Harel Rom. For any usage contact in harelrom1@gmail.com
 #
-name: "CodeQL"
+name: "CodeQL-ML"
 
 on: [push, pull_request]
 
