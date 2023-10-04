@@ -6,6 +6,7 @@
 # All rights reserved to Harel Rom. For any usage contact in harelrom1@gmail.com
 #
 name: "CodeQL-ML"
+description: "Detect ML algorithmic errors"
 
 on: [push, pull_request]
 
