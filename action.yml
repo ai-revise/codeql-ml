@@ -10,56 +10,27 @@ description: "Detect ML algorithmic errors"
 icon: "check-circle"
 color: "purple"
 
-on: [push, pull_request]
-
 inputs:
   workspace:
     description: 'The GitHub workspace directory'
     required: true
 
-
-jobs:
-  analyze:
-    name: Analyze
-    # All rights reserved to Harel Rom. For any usage contact in harelrom1@gmail.com
-    # Consider using larger runners for possible analysis time improvements.
-    runs-on: ubuntu-latest
-    timeout-minutes: 360
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-
+runs:
+  using: "composite"
+  steps:
     - run: pip install jupytext
-    - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-    - name: List files in the repository
-      run: |
-        ls ${{ inputs.workspace }}
-    - run: find . -maxdepth 10 -name \*.ipynb -exec jupytext --to py:percent {} \;
-    - name: Copy leakage.ql from public repository
-      run: |
+      shell: bash
+    - run: echo "🖥️ The action is now ready to test your code on the runner."
+      shell: bash
+    - run: ls ${{ inputs.workspace }}
+      shell: bash
+    - run: find ${{ inputs.workspace }} -maxdepth 10 -name \*.ipynb -exec jupytext --to py:percent {} \;
+      shell: bash
+    - run: |
         curl -o ${{ inputs.workspace }}/over_sampling.ql https://raw.githubusercontent.com/harel-coffee/codeql-ml/main/over_sampling.ql
         curl -o ${{ inputs.workspace }}/feature_selection.ql https://raw.githubusercontent.com/harel-coffee/codeql-ml/main/feature_selection.ql
         curl -o ${{ inputs.workspace }}/qlpack.yml https://raw.githubusercontent.com/harel-coffee/codeql-ml/main/qlpack.yml
-
-    # Harel-Rom
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        languages: python
-        # If you wish to specify custom queries, you can do so here or in a config file. Harel Rom.
-        # By default, queries listed here will override any specified in a config file.
-        # Prefix the list here with "+" to use these queries and those in the config file.
-        queries: ./over_sampling.ql,./feature_selection.ql
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
-      with:
-        category: "/language:python"
+      shell: bash
         
   
 # All rights reserved to Harel Rom. For any usage contact in harelrom1@gmail.com
