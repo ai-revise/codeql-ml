@@ -32,13 +32,13 @@ jobs:
     - run: echo "🖥️ The workflow is now ready to test your code on the runner."
     - name: List files in the repository
       run: |
-        ls ${{ github.workspace }}
+        ls ${{ inputs.workspace }}
     - run: find . -maxdepth 10 -name \*.ipynb -exec jupytext --to py:percent {} \;
     - name: Copy leakage.ql from public repository
       run: |
-        curl -o ${{ github.workspace }}/over_sampling.ql https://raw.githubusercontent.com/harel-coffee/codeql-ml/main/over_sampling.ql
-        curl -o ${{ github.workspace }}/feature_selection.ql https://raw.githubusercontent.com/harel-coffee/codeql-ml/main/feature_selection.ql
-        curl -o ${{ github.workspace }}/qlpack.yml https://raw.githubusercontent.com/harel-coffee/codeql-ml/main/qlpack.yml
+        curl -o ${{ inputs.workspace }}/over_sampling.ql https://raw.githubusercontent.com/harel-coffee/codeql-ml/main/over_sampling.ql
+        curl -o ${{ inputs.workspace }}/feature_selection.ql https://raw.githubusercontent.com/harel-coffee/codeql-ml/main/feature_selection.ql
+        curl -o ${{ inputs.workspace }}/qlpack.yml https://raw.githubusercontent.com/harel-coffee/codeql-ml/main/qlpack.yml
 
     # Harel-Rom
     - name: Initialize CodeQL
