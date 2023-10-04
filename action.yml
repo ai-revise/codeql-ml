@@ -12,6 +12,12 @@ color: "purple"
 
 on: [push, pull_request]
 
+inputs:
+  workspace:
+    description: 'The GitHub workspace directory'
+    required: true
+
+
 jobs:
   analyze:
     name: Analyze
