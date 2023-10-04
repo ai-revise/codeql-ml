@@ -7,7 +7,7 @@
 #
 name: "CodeQL-ML"
 description: "Detect ML algorithmic errors"
-Icon: "check-circle"
+icon: "check-circle"
 color: "purple"
 
 on: [push, pull_request]
